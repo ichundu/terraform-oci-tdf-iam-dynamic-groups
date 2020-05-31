@@ -17,12 +17,11 @@ locals {
     instance_ocids = []
     name           = "OCI-Dynamic-Group"
     defined_tags   = {}
-    freeform_tags  = { "Department" = "Security" }
+    freeform_tags  = {}
   }
 }
 
 resource "oci_identity_dynamic_group" "dynamic_groups" {
-  provider = "oci.oci_home"
   for_each = var.dynamic_groups_config != null ? (var.dynamic_groups_config.dynamic_groups != null ? var.dynamic_groups_config.dynamic_groups : {}) : {}
   #Required
   compartment_id = each.value.compartment_id != null ? each.value.compartment_id : (var.dynamic_groups_config.default_compartment_id != null ? var.dynamic_groups_config.default_compartment_id : local.default_dynamic_group.compartment_id)
